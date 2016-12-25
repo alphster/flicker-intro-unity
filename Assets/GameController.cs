@@ -1,16 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
 
-    public static GameController Instance
-    {
-        get
-        {
-            return GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        }
-    }
+    public static GameController Instance { get { return GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>(); } }
 
     private GameState currentGameState;
 
@@ -18,7 +14,8 @@ public class GameController : MonoBehaviour
     void Start()
     {
         currentGameState = GameState.Start;
-    }
+        StartMenuCanvas.Instance.FadeInAll();
+    }  
 
     // Update is called once per frame
     void Update()
@@ -31,7 +28,10 @@ public class GameController : MonoBehaviour
         if (state == GameState.Intro)
         {
             if (currentGameState == GameState.Start)
+            { 
+                StartMenuCanvas.Instance.FadeOutAll();
                 MainCamera.Instance.MoveToIntroPosition();
+            }
         }
         else if (state == GameState.Campfire)
         {
@@ -42,7 +42,6 @@ public class GameController : MonoBehaviour
 
         currentGameState = state;
     }
-
 }
 
 public enum GameState
