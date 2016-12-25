@@ -27,8 +27,25 @@ public class MainCamera : MonoBehaviour
 
     public void MoveToIntroPosition()
     {
-        this.transform.position = firePosition;
-        this.transform.eulerAngles = fireRotation;
+        StartCoroutine(Transition(
+            startPosition, 
+            startRotation, 
+            firePosition, 
+            fireRotation, 
+            4f));
+    }
+        
+    IEnumerator Transition(Vector3 sPos, Vector3 sRot, Vector3 ePos, Vector3 eRot, float time)
+    {
+        float t = 0.0f;
+        while (t < 1.0f)
+        {
+            t += Time.deltaTime * (Time.timeScale / time);
+            var smoothT = Mathf.SmoothStep(0.0f, 1.0f, t);
+            transform.position = Vector3.Lerp(sPos, ePos, Mathf.SmoothStep(0.0f, 1.0f, smoothT));
+            transform.eulerAngles = Vector3.Lerp(sRot, eRot, Mathf.SmoothStep(0.0f, 1.0f, smoothT));
+            yield return 0;
+        }
     }
 
 
