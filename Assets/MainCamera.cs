@@ -8,11 +8,11 @@ public class MainCamera : MonoBehaviour
     Vector3 StartPosition = new Vector3(0f, .8f, -5.3f);
     Vector3 StartRotation = new Vector3(2.8f, 0, 0);
 
-    Vector3 IntroPosition = new Vector3(0f, 3f, -6f);
-    Vector3 IntroRotation = new Vector3(20f, 0, 0);
+    Vector3 IntroPosition = new Vector3(0f, 2.5f, -6f);
+    Vector3 IntroRotation = new Vector3(25f, 0, 0);
 
-    Vector3 FirePosition = new Vector3(0f, 10.25f, -12f);
-    Vector3 FireRotation = new Vector3(38f, 0, 0);
+    Vector3 FirePosition = new Vector3(0f, 5.2f, -11.5f);
+    Vector3 FireRotation = new Vector3(27f, 0, 0);
 
     // Use this for initialization
     void Start()
@@ -21,17 +21,17 @@ public class MainCamera : MonoBehaviour
         this.transform.eulerAngles = StartRotation;
     }
 
-    public void MoveToIntroPosition()
+    public IEnumerator MoveToIntroPosition()
     {
-        StartCoroutine(Transition(
+        yield return StartCoroutine(Transition(
             IntroPosition,
             IntroRotation, 
             4f));
     }
 
-    public void MoveToFirePosition()
+    public IEnumerator MoveToFirePosition()
     {
-        StartCoroutine(Transition(
+        yield return StartCoroutine(Transition(
             FirePosition,
             FireRotation,
             4f));

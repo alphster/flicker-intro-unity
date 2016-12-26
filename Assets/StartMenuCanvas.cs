@@ -9,34 +9,34 @@ public class StartMenuCanvas : MonoBehaviour {
     public GameObject Title;
     public GameObject ClickTheFire;
 
+    Text titleText;
+    Text clickTheFireText;
+
     // Use this for initialization
     void Start () {
-	
-	}
+        titleText = StartMenuCanvas.Instance.Title.GetComponent<Text>();
+        clickTheFireText = StartMenuCanvas.Instance.ClickTheFire.GetComponent<Text>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
-    public void FadeInAll()
-    {
-        StartCoroutine(FadeInTitleAllAnimation());
+    public void DisableAll()
+    {       
+        titleText.enabled = false;
+        clickTheFireText.enabled = false;
     }
 
-    public void FadeOutAll()
-    {
-        StartCoroutine(FadeOutTitleAnimation());
-    }    
-
-    IEnumerator FadeInTitleAllAnimation()
+    public IEnumerator FadeInAll()
     {
         var time = 3f;
         var invisible = Color.white;
         invisible.a = 0f;
 
-        var titleText = StartMenuCanvas.Instance.Title.GetComponent<Text>();
-        var clickTheFireText = StartMenuCanvas.Instance.ClickTheFire.GetComponent<Text>();
+        titleText.enabled = true;
+        clickTheFireText.enabled = true;
 
         titleText.color = invisible;
         clickTheFireText.color = invisible;
@@ -64,12 +64,9 @@ public class StartMenuCanvas : MonoBehaviour {
         }       
     }
 
-    IEnumerator FadeOutTitleAnimation()
+    public IEnumerator FadeOutAll()
     {
         var time = 3f;
-
-        var titleText = StartMenuCanvas.Instance.Title.GetComponent<Text>();
-        var clickTheFireText = StartMenuCanvas.Instance.ClickTheFire.GetComponent<Text>();
 
         float t = 0.0f;
         while (t < 1.0f)
@@ -81,6 +78,9 @@ public class StartMenuCanvas : MonoBehaviour {
             titleText.color = color;
             clickTheFireText.color = color;
             yield return 0;
-        }       
+        }
+
+        titleText.enabled = false;
+        clickTheFireText.enabled = false;
     }
 }
