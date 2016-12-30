@@ -12,13 +12,17 @@ public class StartMenuCanvas : MonoBehaviour {
     Text titleText;
     Text clickTheFireText;
 
-    // Use this for initialization
-    void Start () {
+    private void Awake()
+    {
         titleText = StartMenuCanvas.Instance.Title.GetComponent<Text>();
         clickTheFireText = StartMenuCanvas.Instance.ClickTheFire.GetComponent<Text>();
     }
+
+    void Start () {
+
+    }
 	
-	// Update is called once per frame
+
 	void Update () {
 	
 	}

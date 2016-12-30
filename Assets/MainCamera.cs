@@ -14,11 +14,16 @@ public class MainCamera : MonoBehaviour
     Vector3 FirePosition = new Vector3(0f, 5.2f, -11.5f);
     Vector3 FireRotation = new Vector3(27f, 0, 0);
 
-    // Use this for initialization
-    void Start()
+    private void Awake()
     {
         this.transform.position = StartPosition;
         this.transform.eulerAngles = StartRotation;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+
     }
 
     public IEnumerator MoveToIntroPosition()

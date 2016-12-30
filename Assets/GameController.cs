@@ -11,10 +11,14 @@ public class GameController : MonoBehaviour
     GameState currentGameState;
     bool listenToFireClicks = false;
 
+    void Awake()
+    {
+        currentGameState = GameState.Start;
+    }
+
     // Use this for initialization
     void Start()
     {
-        currentGameState = GameState.Start;
         StartMenuCanvas.Instance.DisableAll();
         Campfire.Instance.ChangeFire(FireSize.Embers);
         //StartMenuCanvas.Instance.FadeInAll();

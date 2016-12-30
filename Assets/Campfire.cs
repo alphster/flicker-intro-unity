@@ -63,10 +63,9 @@ public class Campfire : MonoBehaviour {
     ParticleSystem flameParticleSystem, sparkParticleSystem;
     
     new Light light;
-    float random1, random2, random3, noise1, floor, ceiling;    
+    float random1, random2, random3, noise1, floor, ceiling;
 
-    // Use this for initialization
-    void Start()
+    private void Awake()
     {
         flameParticleSystem = FlameObject.GetComponent<ParticleSystem>();
         sparkParticleSystem = SparkObject.GetComponent<ParticleSystem>();
@@ -79,6 +78,12 @@ public class Campfire : MonoBehaviour {
         light.range = 0;
         flameParticleSystem.maxParticles = 0;
         sparkParticleSystem.maxParticles = 0;
+    }
+
+    // Use this for initialization
+    void Start()
+    {
+
     }
 	
 	// Update is called once per frame
