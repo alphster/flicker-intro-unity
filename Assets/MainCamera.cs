@@ -49,7 +49,7 @@ public class MainCamera : MonoBehaviour
         var sRot = transform.eulerAngles;
         while (t < 1.0f)
         {
-            t += Time.deltaTime * (Time.timeScale / time);
+            t += Time.deltaTime * (Time.timeScale / (time * (GameController.Instance.SpeedMode ? .001f : 1)));
             var smoothT = Mathf.SmoothStep(0.0f, 1.0f, t);
             transform.position = Vector3.Lerp(sPos, ePos, Mathf.SmoothStep(0.0f, 1.0f, smoothT));
             transform.eulerAngles = Vector3.Lerp(sRot, eRot, Mathf.SmoothStep(0.0f, 1.0f, smoothT));

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
+    public bool SpeedMode = false;
 
     public static GameController Instance { get { return GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>(); } }
 
@@ -71,7 +72,7 @@ public class GameController : MonoBehaviour
         Campfire.Instance.ClickEnabled = false;
         yield return StartCoroutine(StartMenuCanvas.Instance.FadeOutAll());
         yield return StartCoroutine(MainCamera.Instance.MoveToIntroPosition());
-        MainCanvas.Instance.PlayTextGroup("intro");
+        MainCanvas.Instance.DequeueTextGroup("intro");
         Campfire.Instance.ClickEnabled = true;
     }
 

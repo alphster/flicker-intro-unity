@@ -35,7 +35,7 @@ public class StartMenuCanvas : MonoBehaviour {
 
     public IEnumerator FadeInAll()
     {
-        var time = 3f;
+        var time = 3f * (GameController.Instance.SpeedMode ? .001f : 1);
         var invisible = Color.white;
         invisible.a = 0f;
 
@@ -70,7 +70,7 @@ public class StartMenuCanvas : MonoBehaviour {
 
     public IEnumerator FadeOutAll()
     {
-        var time = 3f;
+        var time = 3f * (GameController.Instance.SpeedMode ? .001f : 1);
 
         float t = 0.0f;
         while (t < 1.0f)

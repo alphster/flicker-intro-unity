@@ -143,7 +143,7 @@ public class Campfire : MonoBehaviour {
 
     IEnumerator TransitionFire(FireSize fs, bool stoked)
     {
-        float time = 6f;
+        float time = 6f * (GameController.Instance.SpeedMode ? .001f : 1);
         float t = 0.0f;
 
         var fd = fireDict[fs];
