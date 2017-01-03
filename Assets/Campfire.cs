@@ -6,8 +6,8 @@ public class Campfire : MonoBehaviour {
 
     public static Campfire Instance { get { return GameObject.FindGameObjectWithTag("Campfire").GetComponent<Campfire>(); } }
     
-    float lightIntensityNoise = .15f;
-    float lightPositionNoise = 1f;
+    public float lightIntensityNoise = .2f;
+    public float lightPositionNoise = 1f;
 
     Dictionary<FireSize, FireDetails> fireDict = new Dictionary<FireSize, FireDetails>
     {
@@ -15,8 +15,8 @@ public class Campfire : MonoBehaviour {
             FireSize.Embers, new FireDetails {
                 FlameTransparency = 0f,
                 FlameMaxParticles = 0,
-                LightRange = 4f,
-                LightIntensity = .25f,
+                LightRange = 3f,
+                LightIntensity = 1f,
                 SparkMaxParticles = 3
             }
         },
@@ -24,8 +24,8 @@ public class Campfire : MonoBehaviour {
             FireSize.Flicker, new FireDetails {
                 FlameTransparency = .5f,
                 FlameMaxParticles = 4,
-                LightRange = 8f,
-                LightIntensity = 1f,
+                LightRange = 3.5f,
+                LightIntensity = 4f,
                 SparkMaxParticles = 8
             }
         },
@@ -34,7 +34,7 @@ public class Campfire : MonoBehaviour {
                 FlameTransparency = 1f,
                 FlameMaxParticles = 15,
                 LightRange = 15f,
-                LightIntensity = 4f,
+                LightIntensity = 2f,
                 SparkMaxParticles = 15
             }
         },
@@ -54,21 +54,25 @@ public class Campfire : MonoBehaviour {
     public GameObject LightObject;
     public GameObject FlameObject;
     public GameObject SparkObject;
-    public GameObject HeatObject;    
-
+    public GameObject HeatObject;
+        
     FireSize currentFireSize = FireSize.Flicker;
-    float currentLightIntensity, currentLightRange;
+    [SerializeField]
+    public FireSize  CurrentFireSize { get { return currentFireSize; } set { ChangeFire(value); } }
+    public float currentLightIntensity, currentLightRange;
     Vector3 currentLightPosition;
 
     ParticleSystem flameParticleSystem, sparkParticleSystem;
+    AudioSource throwWoodAudio;
     
     new Light light;
-    float random1, random2, random3, noise1, floor, ceiling;
+    float random1, random2, random3, noise1;
 
     private void Awake()
     {
         flameParticleSystem = FlameObject.GetComponent<ParticleSystem>();
         sparkParticleSystem = SparkObject.GetComponent<ParticleSystem>();
+        throwWoodAudio = GetComponent<AudioSource>();
         light = LightObject.GetComponent<Light>();
         currentLightPosition = LightObject.transform.position;
 
@@ -97,11 +101,9 @@ public class Campfire : MonoBehaviour {
         LightObject.transform.position = currentLightPosition;
 
         // Adding intensity noise to fire to realism.
-        floor = currentLightIntensity - lightIntensityNoise;
-        ceiling = currentLightIntensity + lightIntensityNoise;
-        random1 = Random.Range(floor, ceiling);
-        noise1 = Mathf.PerlinNoise(random1, Time.time);
-        light.intensity = Mathf.Lerp(floor, ceiling, noise1);
+        random1 = Random.Range(-lightIntensityNoise * currentLightIntensity, lightIntensityNoise * currentLightIntensity);
+        noise1 = Mathf.PerlinNoise(random1 / 2f, Time.time);
+        light.intensity = currentLightIntensity + Mathf.Lerp(-lightIntensityNoise, lightIntensityNoise, noise1);
 
         //light.intensity = currentLightIntensity;
         light.range = currentLightRange;
@@ -114,6 +116,7 @@ public class Campfire : MonoBehaviour {
         {
             GameController.Instance.FireClickListener();
             ChangeFire(true);
+            throwWoodAudio.Play();
         }
     }
 

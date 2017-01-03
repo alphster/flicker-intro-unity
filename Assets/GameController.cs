@@ -71,6 +71,7 @@ public class GameController : MonoBehaviour
         Campfire.Instance.ClickEnabled = false;
         yield return StartCoroutine(StartMenuCanvas.Instance.FadeOutAll());
         yield return StartCoroutine(MainCamera.Instance.MoveToIntroPosition());
+        MainCanvas.Instance.PlayTextGroup("intro");
         Campfire.Instance.ClickEnabled = true;
     }
 
